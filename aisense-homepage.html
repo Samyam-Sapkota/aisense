@@ -1,0 +1,2818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI SENSE — Nature-Inspired, AI-Empowered</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #4CAF50;
+      --blue: #64B5F6;
+      --charcoal: #1B1B1B;
+      --light-bg: #0A0A0A;
+      --white: #141414;
+      --warm: #FF6F00;
+      --text-main: #F5F5F5;
+      --text-muted: #A0A0A0;
+      --border-color: #2A2A2A;
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      min-width: 320px;
+      color: var(--text-main);
+      overflow-x: hidden;
+      background: #0A0A0A;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: relative;
+      background: #111;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      height: 80px;
+      display: flex;
+      align-items: center;
+      padding: 0 clamp(24px, 5vw, 80px);
+      width: 100%;
+    }
+    .navbar-inner {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #2E7D32, #1565C0);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-mark svg { width: 22px; height: 22px; fill: white; }
+    .logo-text { font-size: 20px; font-weight: 700; color: var(--text-main); }
+    .logo-text span { color: var(--green); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-main);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-pill-green {
+      background: var(--green) !important;
+      color: white !important;
+      padding: 8px 18px !important;
+      border-radius: 24px;
+      font-weight: 600 !important;
+    }
+    .nav-pill-outline {
+      border: 1.5px solid var(--green);
+      color: var(--green) !important;
+      padding: 7px 18px !important;
+      border-radius: 24px;
+      font-weight: 600 !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 402px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 38%, rgba(0,0,0,0.12) 62%, transparent 78%);
+    }
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 120px;
+      right: 120px;
+    }
+    .hero-content h1 {
+      font-size: 58px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.12;
+      margin-bottom: 18px;
+      max-width: 680px;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.3);
+    }
+    .hero-content p {
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 36px;
+      white-space: nowrap;
+    }
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--green);
+      color: white;
+      height: 52px;
+      padding: 0 40px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      min-width: 200px;
+      box-shadow: 0 4px 20px rgba(76,175,80,0.4);
+    }
+    .hero-cta-fixed {
+      position: absolute;
+      bottom: 70px;
+      left: 120px;
+      z-index: 5;
+    }
+    .hero-dots {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+    .hero-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.8);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hero-dot.active { background: white; border-color: white; }
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+    .hero-arrow-left { left: 36px; }
+    .hero-arrow-right { right: 36px; }
+    .hero-arrow svg { stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── SHARED ── */
+    .section-container {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 5vw, 80px);
+    }
+    .section-label {
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--green);
+      margin-bottom: 14px;
+    }
+    .section-label-warm { color: var(--warm); }
+    .section-heading {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+    .section-divider {
+      width: 60px; height: 3px;
+      background: var(--green);
+      margin-top: 16px;
+      margin-bottom: 48px;
+    }
+
+    /* ── SECTION 2: MISSION ── */
+    .mission {
+      background: #0A0A0A;
+      padding: 100px 0 80px;
+    }
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .mission-body {
+      font-size: 16px;
+      color: #CCC;
+      line-height: 1.75;
+      margin: 28px 0;
+    }
+    .mission-bullets { list-style: none; margin: 24px 0 28px; }
+    .mission-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 18px;
+      font-size: 15px;
+      color: #CCC;
+      line-height: 1.6;
+    }
+    .mission-icon {
+      width: 28px; height: 28px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .mission-tagline {
+      font-size: 15px;
+      font-style: italic;
+      color: #AAA;
+      line-height: 1.7;
+      border-left: 3px solid var(--green);
+      padding-left: 16px;
+    }
+    .mission-image {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      object-position: center right;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    }
+    .video-block { margin-top: 72px; }
+    .video-label {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--warm);
+      margin-bottom: 16px;
+    }
+    .video-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--charcoal);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+    }
+    .video-poster {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+    }
+    .play-btn {
+      position: relative;
+      z-index: 1;
+      width: 80px; height: 80px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 12px rgba(255,255,255,0.08);
+    }
+    .play-btn svg { fill: white; width: 30px; height: 30px; margin-left: 5px; }
+    .video-caption {
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      font-weight: 500;
+      color: white;
+      margin-top: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── SECTION: 3D SCROLL (v2 embedded, below Projects) ── */
+    .veo3d {
+      --veo-green: #7ecb6f;
+      --veo-white: #f4f2ee;
+      --veo-ink: #0c0d0b;
+      background: #0A0A0A;
+      padding: 0 0 80px;
+      position: relative;
+      z-index: 1;
+    }
+    .veo3d-inner {
+      padding-top: 38px;
+    }
+    .veo3d-scroll-container {
+      height: 560vh;
+      position: relative;
+    }
+    .veo3d-sticky-wrap {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: transparent;
+      padding: 0 18px;
+      z-index: 1;
+    }
+    .veo3d-canvas-wrap {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.06),
+        0 12px 48px rgba(0,0,0,0.18),
+        0 40px 100px rgba(0,0,0,0.14);
+      opacity: 0;
+      transform: translateY(28px) scale(0.982);
+      transition:
+        opacity  0.8s cubic-bezier(0.22,1,0.36,1),
+        transform 0.8s cubic-bezier(0.22,1,0.36,1);
+      background: var(--veo-ink);
+      width: min(1100px, calc(100vw - 48px));
+    }
+    .veo3d-canvas-wrap.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .veo3d-frame-canvas {
+      display: block;
+      border-radius: 18px;
+      width: 100%;
+      height: auto;
+    }
+    .veo3d-text-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .veo3d-caption {
+      position: absolute;
+      left: 0; right: 0;
+      opacity: 0;
+      transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.55s cubic-bezier(0.4,0,0.2,1);
+      transform: translateY(10px);
+      will-change: opacity, transform;
+      color: var(--veo-white);
+    }
+    .veo3d-caption.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .veo3d-cap-iot { bottom: 11%; left: 7%; max-width: 65%; }
+    .veo3d-cap-iot .eyebrow {
+      font-size: clamp(9px, 1vw, 11px);
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--veo-green);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .veo3d-cap-iot .eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--veo-green);
+      flex-shrink: 0;
+    }
+    .veo3d-cap-iot .headline {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(26px, 4vw, 52px);
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--veo-white);
+      text-shadow:
+        0 2px 24px rgba(0,0,0,0.9),
+        0 0 60px rgba(0,0,0,0.7);
+      margin-bottom: 14px;
+    }
+    .veo3d-cap-iot .sub {
+      font-size: clamp(12px, 1.3vw, 15px);
+      font-weight: 400;
+      color: rgba(244,242,238,0.72);
+      line-height: 1.7;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.95);
+      max-width: 440px;
+    }
+    .veo3d-cap-deter {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, calc(-50% + 10px));
+      text-align: center;
+      width: 80%;
+    }
+    .veo3d-cap-deter.show { transform: translate(-50%, -50%); }
+    .veo3d-cap-deter .tag {
+      display: inline-block;
+      font-size: clamp(9px, 0.9vw, 11px);
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--veo-green);
+      border: 1px solid rgba(126,203,111,0.35);
+      padding: 5px 16px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(4px);
+    }
+    .veo3d-cap-deter .headline {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(38px, 7vw, 88px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--veo-white);
+      text-shadow:
+        0 4px 40px rgba(0,0,0,0.95),
+        0 0 80px rgba(0,0,0,0.7);
+    }
+    .veo3d-cap-deter .headline em { font-style: italic; color: var(--veo-green); }
+    .veo3d-cap-camera { bottom: 10%; right: 7%; max-width: 50%; text-align: right; }
+    .veo3d-cap-camera .headline {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(18px, 2.6vw, 34px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--veo-white);
+      text-shadow: 0 2px 24px rgba(0,0,0,0.95), 0 0 50px rgba(0,0,0,0.6);
+      margin-bottom: 10px;
+    }
+    .veo3d-cap-camera .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: clamp(10px, 1vw, 12px);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(126,203,111,0.15);
+      border: 1px solid rgba(126,203,111,0.3);
+      color: var(--veo-green);
+      padding: 6px 16px;
+      border-radius: 100px;
+      backdrop-filter: blur(8px);
+    }
+    .veo3d-pill-dot {
+      width: 6px; height: 6px;
+      background: var(--veo-green);
+      border-radius: 50%;
+      animation: veo3d-pulse-dot 1.6s ease-in-out infinite;
+    }
+    @keyframes veo3d-pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+    .veo3d-cap-uav { top: 12%; left: 7%; max-width: 58%; }
+    .veo3d-cap-uav .eyebrow {
+      font-size: clamp(9px, 0.9vw, 11px);
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--veo-green);
+      margin-bottom: 10px;
+    }
+    .veo3d-cap-uav .headline {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(22px, 3.2vw, 44px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--veo-white);
+      text-shadow: 0 2px 28px rgba(0,0,0,0.95), 0 0 60px rgba(0,0,0,0.6);
+      margin-bottom: 12px;
+    }
+    .veo3d-cap-uav .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .veo3d-badge {
+      font-size: clamp(9px, 0.85vw, 11px);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(244,242,238,0.78);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 5px 12px;
+      border-radius: 6px;
+      backdrop-filter: blur(6px);
+    }
+    .veo3d-progress-bar {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(126,203,111,0.5), rgba(180,255,100,0.9));
+      border-radius: 0 2px 2px 0;
+      z-index: 10;
+      pointer-events: none;
+      will-change: width;
+    }
+    .veo3d-loader {
+      position: absolute;
+      inset: 0;
+      background: rgba(12,13,11,0.88);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      transition: opacity 0.7s ease;
+      gap: 0;
+      pointer-events: none;
+    }
+    .veo3d-loader-logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--veo-white);
+      margin-bottom: 28px;
+      letter-spacing: 0.05em;
+    }
+    .veo3d-loader-logo span { color: var(--veo-green); }
+    .veo3d-loader-track {
+      width: 200px;
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+      position: relative;
+      border-radius: 1px;
+    }
+    .veo3d-loader-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      height: 100%;
+      width: 0%;
+      background: var(--veo-green);
+      border-radius: 1px;
+      transition: width 0.08s linear;
+    }
+    .veo3d-loader-pct {
+      color: rgba(255,255,255,0.35);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      margin-top: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── SECTION 3: PROJECTS (project-3d_v2 style) ── */
+    .projects-v2 {
+      background: #0A0A0A;
+      position: relative;
+    }
+    .projects-v2-header {
+      padding: 80px clamp(24px, 5vw, 80px) 40px;
+      position: relative;
+      z-index: 200;
+      background: #0A0A0A;
+    }
+    .projects-v2-header > * {
+      max-width: 1400px;
+    }
+    .projects-v2-container {
+      position: relative;
+    }
+    /* ── Project Panel (fixed left image + circle badge) ── */
+    .project-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      padding: 4vh 3vw 4vh 4vw;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .project-panel.visible {
+      pointer-events: auto;
+    }
+    .project-image-wrapper {
+      position: relative;
+      width: 100%;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+    .project-image-stack {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    .project-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: blur(16px);
+      will-change: opacity, filter;
+    }
+    .project-circle-badge {
+      position: absolute;
+      top: -25px;
+      left: -25px;
+      width: clamp(70px, 7vw, 120px);
+      height: clamp(70px, 7vw, 120px);
+      border-radius: 50%;
+      background: #008f7c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      box-shadow: 0 4px 24px rgba(0,143,124,0.4), 0 0 0 4px rgba(0,143,124,0.15);
+    }
+    .counter {
+      display: flex;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(22px, 2.8vw, 42px);
+      color: #ffffff;
+      line-height: 1;
+      user-select: none;
+    }
+    .digit {
+      position: relative;
+      overflow: hidden;
+      width: 0.65em;
+      height: 1em;
+    }
+    .digit-track {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      will-change: transform;
+    }
+    .digit-char {
+      height: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .content-column {
+      margin-left: 50vw;
+      padding: 0 3vw 0 2vw;
+    }
+    .project-section {
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 8vh 0;
+    }
+    .project-title {
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+      line-height: 1.1;
+      color: var(--text-main);
+    }
+    .project-title .accent {
+      display: block;
+      background: linear-gradient(90deg, #7ab8bf, #a0c4c8, #8bbcc2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 0.15em;
+    }
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+      max-width: 100%;
+    }
+    .items-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .item-row {
+      display: flex;
+      align-items: flex-start;
+      padding: 1rem 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      gap: 1.2rem;
+    }
+    .item-row:last-child {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .item-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.01em;
+      flex-shrink: 0;
+      width: 180px;
+      color: var(--text-main);
+    }
+    .item-detail {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    /* ── SECTION 4: COMPETENCIES ── */
+    .competencies {
+      background: #111;
+      padding: 80px 0 100px;
+    }
+    .process-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .process-card {
+      position: relative;
+      padding-top: 16px;
+      padding-left: 10px;
+    }
+    .process-card-visual {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .process-card-img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      display: block;
+    }
+    .process-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 45%, transparent 70%);
+      border-radius: 16px;
+    }
+    .process-number {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 54px;
+      height: 54px;
+      background: #2E7D32;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      z-index: 5;
+      font-family: 'Outfit', sans-serif;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .process-card h3 {
+      position: absolute;
+      top: 50px;
+      left: 18px;
+      right: 18px;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.35;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .process-card ul { list-style: none; }
+    .process-card ul li {
+      font-size: 13.5px;
+      color: #CCC;
+      line-height: 1.8;
+      padding-left: 16px;
+      position: relative;
+    }
+    .process-card ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    /* ── SECTION 5: SOLUTIONS ── */
+    .solutions {
+      background: var(--charcoal);
+      padding: 120px 0;
+    }
+    .solutions-header {
+      text-align: center;
+      margin-bottom: 88px;
+    }
+    .solutions-header .section-heading {
+      font-size: 44px;
+      color: white;
+      margin: 14px 0;
+    }
+    .solutions-subtitle {
+      font-size: 16px;
+      color: #AAA;
+    }
+    .solution-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+    .solution-block.reverse { direction: rtl; }
+    .solution-block.reverse > * { direction: ltr; }
+    .solution-img {
+      width: 100%; height: 400px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    }
+    .theme-tag {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--warm);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .solution-content h3 {
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 18px;
+      line-height: 1.25;
+    }
+    .solution-content p {
+      font-size: 15px;
+      color: #CCC;
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+    .project-learn-more {
+      margin-top: 2rem;
+      align-self: flex-start;
+    }
+    .btn-outline-white {
+      display: inline-flex;
+      align-items: center;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      color: white;
+      padding: 0 28px;
+      height: 44px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .btn-outline-white:hover {
+      border-color: rgba(255,255,255,1);
+      box-shadow: 0 0 24px rgba(255,255,255,0.08), inset 0 0 24px rgba(255,255,255,0.04);
+    }
+    .btn-outline-white::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255,255,255,0.18) 0%, transparent 65%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .btn-outline-white:hover::after {
+      opacity: 1;
+    }
+    .dev-strip {
+      border-top: 1px solid #333;
+      padding-top: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dev-strip-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: white;
+    }
+    .dev-links { display: flex; gap: 12px; }
+    .dev-pill {
+      border: 1.5px solid rgba(255,255,255,0.5);
+      color: white;
+      padding: 9px 22px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    /* ── BLOGS SECTION (Apple-style carousel) ── */
+    .blogs {
+      background: #000;
+      padding: 100px 0 80px;
+      overflow: hidden;
+    }
+    .blog-section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 5vw, 80px);
+    }
+    .blog-section-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin-bottom: 56px;
+      text-align: center;
+    }
+    .blog-carousel-viewport {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      margin: 0 auto;
+    }
+    .blog-card {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 72%;
+      max-width: 820px;
+      height: 100%;
+      background: #1d1d1f;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      will-change: transform, opacity;
+      transition: all 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transform: translateX(-50%) scale(1);
+      opacity: 1;
+      z-index: 3;
+      cursor: default;
+    }
+    .blog-card.prev {
+      transform: translateX(-152%) scale(0.85);
+      opacity: 0.5;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .blog-card.next {
+      transform: translateX(52%) scale(0.85);
+      opacity: 0.5;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .blog-card.hidden {
+      transform: translateX(-50%) scale(0.8);
+      opacity: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .blog-card-image {
+      flex: 0 0 68%;
+      overflow: hidden;
+      position: relative;
+    }
+    .blog-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .blog-card-body {
+      flex: 1;
+      padding: 24px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .blog-card-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #86868b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+    .blog-card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(20px, 2vw, 26px);
+      font-weight: 700;
+      color: #f5f5f7;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .blog-card-excerpt {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: #86868b;
+      margin: 0;
+    }
+    .blog-card-link {
+      color: #2997ff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .blog-card-link:hover {
+      color: #6cb8ff;
+    }
+    /* ── Dot Navigation ── */
+    .blog-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 40px;
+    }
+    .blog-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #48484a;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .blog-dot:hover {
+      background: #636366;
+    }
+    .blog-dot.active {
+      width: 28px;
+      border-radius: 4px;
+      background: #f5f5f7;
+    }
+    /* ── Nav bar (dots + play/pause) ── */
+    .blog-nav-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .blog-nav-bar .blog-dots {
+      margin-top: 0;
+    }
+    .blog-playpause {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid #48484a;
+      background: transparent;
+      color: #86868b;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+    .blog-playpause:hover {
+      border-color: #636366;
+      color: #f5f5f7;
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* ── SECTION 7: FAQ ── */
+    .faq {
+      background: #0A0A0A;
+      padding: 100px 0;
+    }
+    .faq-container {
+      max-width: 760px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 5vw, 80px);
+      text-align: center;
+    }
+    .faq-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 700;
+      color: #c0bbfc;
+      margin-bottom: 12px;
+    }
+    .faq-subtext {
+      font-size: 15px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto 48px;
+    }
+    .faq-list { text-align: left; }
+    .faq-item {
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .faq-item.open {
+      border-color: rgba(192,187,252,0.25);
+      background: rgba(255,255,255,0.06);
+    }
+    .faq-question {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      gap: 16px;
+      user-select: none;
+    }
+    .faq-question span:first-child {
+      font-size: 16px;
+      font-weight: 500;
+      color: #f0f0f0;
+      flex: 1;
+      line-height: 1.4;
+    }
+    .faq-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+    .faq-toggle::before,
+    .faq-toggle::after {
+      content: '';
+      position: absolute;
+      background: rgba(255,255,255,0.7);
+      border-radius: 1px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .faq-toggle::before {
+      width: 14px;
+      height: 2px;
+    }
+    .faq-toggle::after {
+      width: 2px;
+      height: 14px;
+    }
+    .faq-item.open .faq-toggle {
+      border-color: rgba(192,187,252,0.5);
+    }
+    .faq-item.open .faq-toggle::after {
+      transform: rotate(90deg);
+      opacity: 0;
+    }
+    .faq-answer-wrap {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .faq-item.open .faq-answer-wrap {
+      grid-template-rows: 1fr;
+    }
+    .faq-answer {
+      overflow: hidden;
+    }
+    .faq-answer p {
+      padding: 0 24px 22px;
+      font-size: 14.5px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+    }
+
+    /* ── SECTION 8: PARTNERS ── */
+    .partners {
+      background: #0A0A0A;
+      padding: 80px 0;
+    }
+    .partners-marquee-wrapper {
+      overflow: hidden;
+      margin-top: 56px;
+      padding: 16px 0;
+    }
+    .partners-marquee {
+      display: flex;
+      gap: 40px;
+      animation: marquee 35s linear infinite;
+      width: max-content;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .partner-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      width: 140px;
+      filter: grayscale(100%);
+      opacity: 0.7;
+    }
+    .partner-logo-box {
+      width: 140px; height: 72px;
+      background: #1A1A1A;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #AAA;
+      text-align: center;
+      padding: 8px;
+      line-height: 1.3;
+      border: 1px solid var(--border-color);
+    }
+    .partner-logo-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: #888;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ── SECTION 9: CONTACT ── */
+    .contact {
+      background: var(--charcoal);
+      padding: 100px 0;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .contact-heading {
+      font-size: 38px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 10px;
+    }
+    .contact-subtitle {
+      font-size: 16px;
+      color: #AAA;
+      margin-bottom: 44px;
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .contact-icon {
+      width: 42px; height: 42px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-info-text {
+      font-size: 15px;
+      color: white;
+      line-height: 1.6;
+      padding-top: 8px;
+    }
+    .contact-info-text a { color: white; text-decoration: none; }
+    .social-row { display: flex; gap: 12px; margin-top: 36px; justify-content: center; }
+    .social-icon {
+      width: 36px; height: 36px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+    .contact-form-inline {
+      background: #222;
+      border-radius: 16px;
+      padding: 36px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #AAA;
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      height: 48px;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 0 16px;
+      font-size: 14px;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .form-input:focus {
+      border-color: #6c63ff;
+    }
+    .form-textarea {
+      width: 100%;
+      height: 110px;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .form-textarea:focus {
+      border-color: #6c63ff;
+    }
+    .btn-submit {
+      width: 100%;
+      height: 50px;
+      background: #6c63ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      margin-top: 4px;
+      transition: background 0.2s ease;
+    }
+    .btn-submit:hover {
+      background: #5a52e0;
+    }
+    .form-note {
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: #111;
+      padding: 52px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 0.8fr;
+      gap: 64px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid #222;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: #888;
+      margin: 14px 0 8px;
+      line-height: 1.65;
+    }
+    .footer-location { font-size: 13px; color: #888; }
+    .footer-col h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 18px;
+    }
+    .footer-links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 32px;
+    }
+    .footer-links-grid a {
+      font-size: 13px;
+      color: #999;
+      text-decoration: none;
+      line-height: 2.2;
+      display: block;
+    }
+    .footer-social {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .footer-social-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #222;
+      font-size: 13px;
+      font-weight: 700;
+      color: #AAA;
+      text-decoration: none;
+    }
+    .footer-email {
+      font-size: 13px;
+      color: #999;
+      text-decoration: none;
+      display: block;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+    }
+    .footer-bottom p { font-size: 12px; color: #666; }
+    .footer-bottom a { font-size: 12px; color: #666; text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .blog-card { width: 78%; }
+      .blog-carousel-viewport { height: 480px; }
+    }
+    @media (max-width: 1024px) {
+      .mission-grid { grid-template-columns: 1fr; gap: 40px; }
+      .mission-image { height: 300px; }
+      .solution-block, .solution-block.reverse { grid-template-columns: 1fr; gap: 40px; direction: ltr; }
+      .solution-block.reverse > * { direction: ltr; }
+      .solution-img { height: 300px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-content { left: 32px; right: 32px; }
+      .hero-cta-fixed { left: 32px; bottom: 60px; }
+      .hero-content h1 { font-size: 36px; }
+      .hero-content p { font-size: 16px; }
+      .project-panel {
+        width: 100%;
+        height: auto;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: #0A0A0A;
+        padding: 2vh 4vw;
+      }
+      .project-image-stack {
+        aspect-ratio: 16 / 9;
+        max-height: 35vh;
+        border-radius: 12px;
+      }
+      .project-circle-badge {
+        width: 56px;
+        height: 56px;
+        top: -8px;
+        left: -4px;
+      }
+      .counter { font-size: 20px; }
+      .content-column { margin-left: 0; padding: 0 1.5rem; }
+      .project-section { min-height: auto; padding: 3rem 0; }
+      .item-detail { display: none; }
+      .process-strip { grid-template-columns: repeat(2, 1fr); }
+      .section-heading { font-size: 28px !important; }
+      .solutions-header .section-heading { font-size: 32px !important; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .blog-card { width: 88%; }
+      .blog-card.prev, .blog-card.next { opacity: 0; pointer-events: none; }
+      .blog-carousel-viewport { height: 460px; }
+      .blogs { padding: 70px 0 56px; }
+    }
+    @media (max-width: 600px) {
+      .blog-card { width: 94%; }
+      .blog-carousel-viewport { height: 440px; }
+      .blog-card-body { padding: 18px 20px 22px; }
+      .blogs { padding: 60px 0 50px; }
+      .blog-section-heading { margin-bottom: 36px; }
+    }
+    @media (max-width: 480px) {
+      .hero-content h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 0 — NAVBAR                        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="#" class="logo">
+        <img src="ai-sense-logo.png" alt="AI SENSE" style="height:65px;width:auto;display:block;filter:brightness(0) invert(1);">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#">Our Solutions ▾</a></li>
+        <li><a href="#">Researchers / Grants</a></li>
+        <li><a href="#">Developers</a></li>
+        <li><a href="#">Consumers</a></li>
+        <li><a href="#">Team</a></li>
+        <li><a href="#">Partners</a></li>
+        <li><a href="#" class="nav-pill-outline">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 1 — HERO CAROUSEL                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-slide active">
+      <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=1440&h=700&fit=crop&q=80" alt="Agricultural field with AI monitoring">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Nature-Inspired,<br>AI-Empowered</h1>
+        <p>Intelligent systems bridging natural environments with digital tools</p>
+      </div>
+    </div>
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1440&h=700&fit=crop&q=80" alt="Edge AI camera on farm">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Detect. Deter. Adapt.</h1>
+        <p>AI-enabled coexistence for farms, parks, and communities</p>
+      </div>
+    </div>
+    <div class="hero-slide">
+      <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=1440&h=700&fit=crop&q=80" alt="Team field deployment">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>From Edge to Cloud</h1>
+        <p>End-to-end R&amp;D in climate, agriculture, and biodiversity</p>
+      </div>
+    </div>
+
+    <a href="#contact" class="btn-hero hero-cta-fixed">Contact Us</a>
+
+    <button class="hero-arrow hero-arrow-left" onclick="changeSlide(-1)">
+      <svg width="20" height="20" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button class="hero-arrow hero-arrow-right" onclick="changeSlide(1)">
+      <svg width="20" height="20" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+    <div class="hero-dots">
+      <div class="hero-dot active" onclick="goToSlide(0)"></div>
+      <div class="hero-dot" onclick="goToSlide(1)"></div>
+      <div class="hero-dot" onclick="goToSlide(2)"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 2 — OUR MISSION                   -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="mission">
+    <div class="section-container">
+      <div class="mission-grid">
+        <div>
+          <div class="section-label">OUR MISSION</div>
+          <h2 class="section-heading">Connecting Nature and Technology for Climate-Smart Innovation</h2>
+          <p class="mission-body">We are an R&amp;D-first venture working at the intersection of climate, agriculture, and biodiversity. Our mission is to design, build, and deploy intelligent systems that bridge natural environments with digital tools — supporting more sustainable, data-driven decisions on the ground. We apply edge AI and nature-inspired algorithms to create responsive, real-time sensing networks for the most challenging outdoor conditions.</p>
+          <ul class="mission-bullets">
+            <li>
+              <span class="mission-icon">🔧</span>
+              <span>Design efficient, low-power sensor systems for field deployment</span>
+            </li>
+            <li>
+              <span class="mission-icon">🛡️</span>
+              <span>Build resilient sensing platforms for farming and ecosystems</span>
+            </li>
+            <li>
+              <span class="mission-icon">☁️</span>
+              <span>Deploy scalable edge-to-cloud systems for adaptive field intelligence</span>
+            </li>
+          </ul>
+          <p class="mission-tagline">"Our vision is to connect nature with digital insight — advancing ecological understanding and climate resilience, wherever it's needed most."</p>
+        </div>
+        <div>
+          <img class="mission-image" src="https://thumbs.dreamstime.com/b/green-vegetables-field-29004441.jpg" alt="Field deployment with green vegetation">
+        </div>
+      </div>
+
+      <div class="veo3d-inline" style="margin-top: 72px;">
+        <div class="veo3d-scroll-container" id="veoScrollContainer">
+          <div class="veo3d-sticky-wrap" id="veoStickyWrap">
+            <div class="veo3d-canvas-wrap" id="veoCanvasWrap">
+              <canvas class="veo3d-frame-canvas" id="veoFrameCanvas"></canvas>
+
+              <div class="veo3d-loader" id="veoLoader" aria-live="polite">
+                <div class="veo3d-loader-logo">Ve<span>o</span></div>
+                <div class="veo3d-loader-track"><div class="veo3d-loader-fill" id="veoLoaderFill"></div></div>
+                <div class="veo3d-loader-pct" id="veoLoaderPct">0%</div>
+              </div>
+
+              <div class="veo3d-text-overlay" id="veoTextOverlay">
+                <div class="veo3d-caption veo3d-cap-iot" id="veoCap1">
+                  <div class="eyebrow">Underground Intelligence</div>
+                  <div class="headline">IoT Sensors<br>for Precision<br>Agriculture</div>
+                  <div class="sub">Real-time soil moisture, temperature &amp; electrical conductivity — at every root zone depth, continuously.</div>
+                </div>
+
+                <div class="veo3d-caption veo3d-cap-deter" id="veoCap2">
+                  <div class="tag">Wildlife Management</div>
+                  <div class="headline">Deter &amp;<br><em>Coexist</em></div>
+                </div>
+
+                <div class="veo3d-caption veo3d-cap-camera" id="veoCap3">
+                  <div class="headline">Autonomous solar-powered<br>camera system that monitors<br>crop health 24×7</div>
+                  <div class="pill">
+                    <span class="veo3d-pill-dot"></span>
+                    Live Monitoring
+                  </div>
+                </div>
+
+                <div class="veo3d-caption veo3d-cap-uav" id="veoCap4">
+                  <div class="eyebrow">Aerial Intelligence</div>
+                  <div class="headline">Smart Agriculture<br>with UAV &amp;<br>NDVI Mapping</div>
+                  <div class="badges">
+                    <span class="veo3d-badge">Multispectral Imaging</span>
+                    <span class="veo3d-badge">Crop Stress Detection</span>
+                    <span class="veo3d-badge">Yield Forecasting</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="veo3d-progress-bar" id="veoProgressBar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 3 — CURRENT PROJECTS (v2 style)   -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- Fixed Project Panel (outside section for z-index stacking) -->
+  <div class="project-panel" id="projectsPanel">
+      <div class="project-image-wrapper">
+        <div class="project-image-stack">
+          <img class="project-image active" data-project="01" src="animal-detorance.jpg" alt="AI CoExist" loading="eager">
+          <img class="project-image" data-project="02" src="DJI_20250915093820_0164_D-scaled.jpg" alt="Agriculture AI" loading="lazy">
+          <img class="project-image" data-project="03" src="field_work1.png" alt="Urban Farming" loading="lazy">
+        </div>
+        <div class="project-circle-badge">
+        <div class="counter">
+          <div class="digit">
+            <div class="digit-track" id="digitTens">
+              <div class="digit-char">0</div>
+              <div class="digit-char">1</div>
+              <div class="digit-char">2</div>
+              <div class="digit-char">3</div>
+              <div class="digit-char">4</div>
+              <div class="digit-char">5</div>
+              <div class="digit-char">6</div>
+              <div class="digit-char">7</div>
+              <div class="digit-char">8</div>
+              <div class="digit-char">9</div>
+            </div>
+          </div>
+          <div class="digit">
+            <div class="digit-track" id="digitUnits" style="transform: translateY(-1em)">
+              <div class="digit-char">0</div>
+              <div class="digit-char">1</div>
+              <div class="digit-char">2</div>
+              <div class="digit-char">3</div>
+              <div class="digit-char">4</div>
+              <div class="digit-char">5</div>
+              <div class="digit-char">6</div>
+              <div class="digit-char">7</div>
+              <div class="digit-char">8</div>
+              <div class="digit-char">9</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="projects-v2">
+    <div class="projects-v2-header">
+      <div class="section-label">WHAT WE'RE BUILDING</div>
+      <h2 class="section-heading">Current Projects</h2>
+    </div>
+
+    <div class="projects-v2-container">
+      <!-- Content -->
+      <div class="content-column">
+
+        <!-- Project 01 -->
+        <section class="project-section" data-number="01">
+          <h2 class="project-title">AI CoExist<span class="accent">Intelligent Wildlife Detection & Deterrence</span></h2>
+          <p class="project-desc">NSF SBIR Phase I–funded technology that integrates AI-enabled cameras to detect, classify, and track wildlife species in real time — enabling humane, adaptive coexistence.</p>
+          <div class="items-list">
+            <div class="item-row">
+              <span class="item-name">AI-enabled Vision Systems</span>
+              <span class="item-detail">Integrates AI cameras to detect, classify, and track deer, raccoons, and other wildlife in real time.</span>
+            </div>
+            <div class="item-row">
+              <span class="item-name">Adaptive Deterrence Engine</span>
+              <span class="item-detail">Edge-based learning activates beamformed acoustic deterrents for species-specific targeting.</span>
+            </div>
+            <div class="item-row">
+              <span class="item-name">Predictive Reinforcement Loop</span>
+              <span class="item-detail">Reinforcement learning optimizes deterrence timing, reducing habituation over time.</span>
+            </div>
+            <div class="item-row">
+              <span class="item-name">Detect–Deter–Adapt Framework</span>
+              <span class="item-detail">Anticipates animal re-entry patterns for adaptive, humane response strategies.</span>
+            </div>
+            <div class="item-row">
+              <span class="item-name">Open-Source Coexistence Platform</span>
+              <span class="item-detail">Open ecosystem for data, models, and APIs — empowering researchers, farmers, and communities.</span>
+            </div>
+          </div>
+          <a href="#" class="btn-outline-white project-learn-more">Learn More &rarr;</a>
+        </section>
+
+        <!-- Project 02 -->
+        <section class="project-section" data-number="02">
+          <h2 class="project-title">Revolutionizing Agriculture<span class="accent">AI-Driven Disaster Response</span></h2>
+          <p class="project-desc">AI-driven system combining satellite, UAV, and IoT data to detect damage, quantify crop loss, and support recovery planning for agricultural disasters.</p>
+          <div class="items-list">
+            <div class="item-row">
+              <span class="item-name">Rapid Damage Detection</span>
+              <span class="item-detail">Combines satellite, UAV, and IoT data to identify flood, drought, or storm impacts in near-real-time.</span>
+            </div>
+            <div class="item-row">
+              <span class="item-name">Crop Loss Quantification</span>
+              <span class="item-detail">Vegetation indices and AI yield models estimate biomass reduction and financial loss.</span>
+            </div>
+            <div class="item-row">
+              <span class="item-name">Recovery Planning</span>
+              <span class="item-detail">Ranks priority zones by severity and provides adaptive recommendations for replanting.</span>
+            </div>
+            <div class="item-row">
+              <span class="item-name">Policy & Resilience Support</span>
+              <span class="item-detail">Standardized reports for governments and insurers, plus predictive models from past disasters.</span>
+            </div>
+          </div>
+          <a href="#" class="btn-outline-white project-learn-more">Learn More &rarr;</a>
+        </section>
+
+        <!-- Project 03 -->
+        <section class="project-section" data-number="03">
+          <h2 class="project-title">Urban Farming<span class="accent">AI Monitoring System</span></h2>
+          <p class="project-desc">Multi-scale AI monitoring for urban agriculture — from edge-based real-time analysis to cloud diagnostics and personalized grower support.</p>
+          <div class="items-list">
+            <div class="item-row">
+              <span class="item-name">Edge-Based Real-Time Monitoring</span>
+              <span class="item-detail">Lightweight CNNs on cameras and sensors for continuous crop and environment analysis.</span>
+            </div>
+            <div class="item-row">
+              <span class="item-name">Cloud-Enabled Diagnostics</span>
+              <span class="item-detail">Multi-spectral analysis, anomaly detection, and forecasting across diverse urban farms.</span>
+            </div>
+            <div class="item-row">
+              <span class="item-name">Agentic AI Support</span>
+              <span class="item-detail">Personalized recommendations for irrigation, nutrient cycles, and harvesting schedules.</span>
+            </div>
+          </div>
+          <a href="#" class="btn-outline-white project-learn-more">Learn More &rarr;</a>
+        </section>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 4 — CORE COMPETENCIES             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="competencies">
+    <div class="section-container">
+      <div class="section-label">HOW WE WORK</div>
+      <h2 class="section-heading" style="font-size:32px;">End-to-End: Design, Build &amp; Deploy</h2>
+      <div class="process-strip">
+
+        <div class="process-card">
+          <div class="process-number">01</div>
+          <div class="process-card-visual">
+            <img class="process-card-img" src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&h=800&fit=crop&q=80" alt="Market Research">
+            <div class="process-card-overlay"></div>
+            <h3>Market Research &amp; Product Definition</h3>
+          </div>
+          <ul>
+            <li>Pain points analysis</li>
+            <li>Market segmentation</li>
+            <li>Requirement engineering</li>
+          </ul>
+        </div>
+
+        <div class="process-card">
+          <div class="process-number">02</div>
+          <div class="process-card-visual">
+            <img class="process-card-img" src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=600&h=800&fit=crop&q=80" alt="IoT Development">
+            <div class="process-card-overlay"></div>
+            <h3>Embedded Systems &amp; IoT Development</h3>
+          </div>
+          <ul>
+            <li>Sensor selection</li>
+            <li>Hardware prototyping</li>
+            <li>Edge AI &amp; IoT comms</li>
+          </ul>
+        </div>
+
+        <div class="process-card">
+          <div class="process-number">03</div>
+          <div class="process-card-visual">
+            <img class="process-card-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=800&fit=crop&q=80" alt="AI ML Training">
+            <div class="process-card-overlay"></div>
+            <h3>AI/ML Training &amp; Optimization</h3>
+          </div>
+          <ul>
+            <li>Data pipeline</li>
+            <li>Model training</li>
+            <li>TinyML &amp; edge inference</li>
+          </ul>
+        </div>
+
+        <div class="process-card">
+          <div class="process-number">04</div>
+          <div class="process-card-visual">
+            <img class="process-card-img" src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&h=800&fit=crop&q=80" alt="Go to Market">
+            <div class="process-card-overlay"></div>
+            <h3>Productization &amp; Go-To-Market</h3>
+          </div>
+          <ul>
+            <li>Pilot deployments</li>
+            <li>Pricing &amp; distribution</li>
+            <li>Scaling</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 6 — BLOGS                         -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="blogs" id="blogSection">
+    <div class="blog-section-inner">
+      <h2 class="blog-section-heading">From the Blog</h2>
+      <div class="blog-carousel-viewport" id="blogCarouselViewport">
+        <!-- Cards rendered by JS -->
+      </div>
+      <div class="blog-nav-bar">
+        <div class="blog-dots" id="blogDots">
+          <!-- Dots rendered by JS -->
+        </div>
+        <button class="blog-playpause" id="blogPlayPause" aria-label="Pause autoplay">
+          <svg class="blog-pp-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          <svg class="blog-pp-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="display:none"><polygon points="6,4 20,12 6,20"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 7 — FAQ ACCORDION                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="faq">
+    <div class="faq-container">
+      <h2 class="faq-heading">Frequently Asked Questions</h2>
+      <p class="faq-subtext">Common questions on our technology, approach, and how we work with farmers.</p>
+      <div class="faq-list">
+
+        <div class="faq-item open">
+          <div class="faq-question">
+            <span>How does AI SENSE integrate with existing farming practices?</span>
+            <div class="faq-toggle"></div>
+          </div>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer">
+              <p>Our AI solutions complement traditional farming methods, introducing smart automation while keeping farmers at the core of decision-making. We work closely with local agricultural experts to ensure our technology enhances existing practices.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What kind of data do your systems collect?</span>
+            <div class="faq-toggle"></div>
+          </div>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer">
+              <p>Our systems collect visual data for weed detection, crop health assessment, and growth monitoring. This includes multispectral imagery and environmental data, all processed through secure AI algorithms to provide actionable insights.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How can farmers access AI SENSE technologies?</span>
+            <div class="faq-toggle"></div>
+          </div>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer">
+              <p>We work through partnerships with NARC, local agricultural institutions, and farmer cooperatives. Farmers can access our technologies through these partnerships, receiving comprehensive training and ongoing support.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 8 — PARTNERS CAROUSEL             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="partners">
+    <div class="section-container">
+      <div class="section-label">COLLABORATIONS</div>
+      <h2 class="section-heading">Our Partners</h2>
+    </div>
+    <div class="partners-marquee-wrapper">
+      <div class="partners-marquee">
+        <div class="partner-logo"><div class="partner-logo-box">MPSC Lab</div><div class="partner-logo-name">MPSC Lab (UMBC)</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">CyPress Center</div><div class="partner-logo-name">CyPress Center (UMBC)</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NSF</div><div class="partner-logo-name">Natl. Science Foundation</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Plantation Park Heights</div><div class="partner-logo-name">Plantation Park Heights Urban Farm</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">USDA</div><div class="partner-logo-name">USDA</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">UMD</div><div class="partner-logo-name">Univ. of Maryland</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">UMES</div><div class="partner-logo-name">UMD Eastern Shore</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NECC USA</div><div class="partner-logo-name">Nepal Ed. &amp; Cultural Ctr</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">St. John's Community</div><div class="partner-logo-name">St. John's Community Assoc.</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Susquehannock Wildlife</div><div class="partner-logo-name">Susquehannock Wildlife Society</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Mid-Atlantic I-Corps</div><div class="partner-logo-name">Mid-Atlantic I-Corps</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NAAMII</div><div class="partner-logo-name">NAAMII (Nepal)</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NARC</div><div class="partner-logo-name">Nepal Agri. Research Council</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NARI</div><div class="partner-logo-name">Nepal Agri. Research Institute</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Google for Startups</div><div class="partner-logo-name">Google for Startups</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Urban Nature Lab</div><div class="partner-logo-name">Urban Nature Lab</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Montgomery Parks</div><div class="partner-logo-name">Montgomery Parks</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Howard County Parks</div><div class="partner-logo-name">Howard County Rec &amp; Parks</div></div>
+        <!-- Set 2 (duplicate for infinite scroll) -->
+        <div class="partner-logo"><div class="partner-logo-box">MPSC Lab</div><div class="partner-logo-name">MPSC Lab (UMBC)</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">CyPress Center</div><div class="partner-logo-name">CyPress Center (UMBC)</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NSF</div><div class="partner-logo-name">Natl. Science Foundation</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Plantation Park Heights</div><div class="partner-logo-name">Plantation Park Heights Urban Farm</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">USDA</div><div class="partner-logo-name">USDA</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">UMD</div><div class="partner-logo-name">Univ. of Maryland</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">UMES</div><div class="partner-logo-name">UMD Eastern Shore</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NECC USA</div><div class="partner-logo-name">Nepal Ed. &amp; Cultural Ctr</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">St. John's Community</div><div class="partner-logo-name">St. John's Community Assoc.</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Susquehannock Wildlife</div><div class="partner-logo-name">Susquehannock Wildlife Society</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Mid-Atlantic I-Corps</div><div class="partner-logo-name">Mid-Atlantic I-Corps</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NAAMII</div><div class="partner-logo-name">NAAMII (Nepal)</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NARC</div><div class="partner-logo-name">Nepal Agri. Research Council</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">NARI</div><div class="partner-logo-name">Nepal Agri. Research Institute</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Google for Startups</div><div class="partner-logo-name">Google for Startups</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Urban Nature Lab</div><div class="partner-logo-name">Urban Nature Lab</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Montgomery Parks</div><div class="partner-logo-name">Montgomery Parks</div></div>
+        <div class="partner-logo"><div class="partner-logo-box">Howard County Parks</div><div class="partner-logo-name">Howard County Rec &amp; Parks</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 9 — CONTACT BLOCK                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="contact" id="contact">
+    <div class="section-container">
+      <div class="contact-grid">
+
+        <div>
+          <h2 class="contact-heading">Get In Touch</h2>
+          <p class="contact-subtitle">Connect with our team</p>
+          <div class="contact-info-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-info-text">Baltimore, MD, USA<br>Kathmandu, Nepal</div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">✉️</div>
+            <div class="contact-info-text"><a href="mailto:info@aisenseusa.com">info@aisenseusa.com</a></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">📞</div>
+            <div class="contact-info-text"><a href="tel:+12404442669">+01 240 444 2669</a></div>
+          </div>
+          
+        </div>
+
+        <div class="contact-form-inline">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-input" type="text" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Tell us how we can help..."></textarea>
+          </div>
+          <button class="btn-submit">Send Message</button>
+          <p class="form-note">We typically respond within 24–48 hours.</p>
+        </div>
+
+      </div>
+
+      <div class="social-row">
+          <div class="social-icon" title="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.8 0-5 2.2-5 5v14c0 2.8 2.2 5 5 5h14c2.8 0 5-2.2 5-5v-14c0-2.8-2.2-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.3c-1 0-1.7-.7-1.7-1.7s.7-1.7 1.7-1.7 1.7.7 1.7 1.7-.7 1.7-1.7 1.7zm13.5 11.3h-3v-5.6c0-1.3-.5-2.2-1.7-2.2-.9 0-1.4.6-1.7 1.1-.1.2-.1.5-.1.8v5.9h-3s.1-9.6 0-10h3v1.4c.4-.6 1.2-1.4 2.9-1.4 2.1 0 3.6 1.4 3.6 4.4v5.6z"/>
+            </svg>
+          </div>
+
+          <div class="social-icon" title="Twitter/X">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+              <path d="M18.244 2h3.308l-7.227 8.26 8.502 11.74h-6.655l-5.214-7.148-6.26 7.148h-3.308l7.73-8.834-8.153-11.166h6.797l4.713 6.488 5.767-6.488zm-1.161 18h1.833l-11.26-15.36h-1.967l11.394 15.36z"/>
+            </svg>
+          </div>
+
+          <div class="social-icon" title="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+              <path d="M12 .5c-6.6 0-12 5.4-12 12 0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.4-4-1.4-.6-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.3 1.2.9-.2 1.9-.3 2.9-.3s2 .1 2.9.3c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 3 .1 3.3.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6 .4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.8-1.6 8.2-6.1 8.2-11.4 0-6.6-5.4-12-12-12z"/>
+            </svg>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!--  SECTION 10 — FOOTER                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="section-container">
+      <div class="footer-grid">
+
+        <div class="footer-col">
+          <div class="logo" style="margin-bottom:4px;">
+            <img src="ai-sense-logo.png" alt="AI SENSE" style="height:65px;width:auto;display:block;filter:brightness(0) invert(1);">
+          </div>
+          <p class="footer-tagline">Nature-Inspired, AI-Empowered</p>
+          <p class="footer-location">Baltimore, MD · Kathmandu, Nepal</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <div class="footer-links-grid">
+            <a href="#">Home</a>
+            <a href="#">Team</a>
+            <a href="#">Our Solutions</a>
+            <a href="#">Life@AI SENSE</a>
+            <a href="#">Researchers</a>
+            <a href="#">FAQ</a>
+            <a href="#">Developers</a>
+            <a href="#">Partners</a>
+            <a href="#">Consumers</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Stay Connected</h4>
+          <div class="footer-social">
+            <a href="#" class="footer-social-badge">in</a>
+            <a href="#" class="footer-social-badge">𝕏</a>
+            <a href="#" class="footer-social-badge">GH</a>
+          </div>
+          <a class="footer-email" href="mailto:info@aisenseusa.com">info@aisenseusa.com</a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 AI SENSE USA. All rights reserved.</p>
+        <div>
+          <a href="#">Privacy Policy</a>
+          <span style="color:#444; margin:0 8px;">·</span>
+          <a href="#">Terms and Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP + ScrollTrigger + Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <script>
+    // ── Lenis smooth scroll (shared) ──
+    (function () {
+      gsap.registerPlugin(ScrollTrigger);
+      const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    })();
+  </script>
+
+  <script>
+    // ── Projects v2: fixed image panel + circle badge counter + image crossfade + item-row reveal ──
+    (function() {
+      const panel = document.getElementById('projectsPanel');
+      const digitTens = document.getElementById('digitTens');
+      const digitUnits = document.getElementById('digitUnits');
+      const projectImages = document.querySelectorAll('.project-image');
+      const sections = document.querySelectorAll('.project-section');
+      let currentNumber = '01';
+
+      /* ── Tunable constants ── */
+      const BLUR_MAX      = 16;    // max blur in px
+      const FADE_IN_START = 0.00;  // progress: image begins fading in
+      const FADE_IN_END   = 0.08;  // progress: image fully opaque
+      const UNBLUR_START  = 0.00;  // progress: unblur begins (immediate — no blur phase)
+      const UNBLUR_END    = 0.08;  // progress: image fully sharp (matches fade-in)
+      const SHARP_END     = 0.55;  // progress: sharp phase ends, blur-out begins
+      const BLUR_OUT_END  = 0.65;  // progress: re-blur complete
+      const FADE_OUT_END  = 0.68;  // progress: fade-out complete
+
+      // Track each image's current opacity for panel derivation
+      const imageOpacities = new Array(sections.length).fill(0);
+
+      /* ── Helper: remap value from [inMin, inMax] to [0, 1], clamped ── */
+      function remap(value, inMin, inMax) {
+        return Math.max(0, Math.min(1, (value - inMin) / (inMax - inMin)));
+      }
+
+      // Flag: once competencies section takes over, block all image updates
+      let panelKilled = false;
+
+      /* ── Update panel opacity from image states ── */
+      function updatePanel() {
+        const maxOp = Math.max(...imageOpacities);
+        panel.style.opacity = maxOp;
+        if (maxOp > 0.01) {
+          panel.classList.add('visible');
+        } else {
+          panel.classList.remove('visible');
+        }
+      }
+
+      /* ── Digit counter ── */
+      function setNumber(numStr) {
+        if (numStr === currentNumber) return;
+        currentNumber = numStr;
+        const tens = parseInt(numStr[0], 10);
+        const units = parseInt(numStr[1], 10);
+        gsap.to(digitTens, { y: `-${tens}em`, duration: 0.8, ease: 'expo.out' });
+        gsap.to(digitUnits, { y: `-${units}em`, duration: 0.8, ease: 'expo.out' });
+      }
+
+      sections.forEach(section => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          onEnter: () => setNumber(section.getAttribute('data-number')),
+          onEnterBack: () => setNumber(section.getAttribute('data-number'))
+        });
+      });
+
+      /* ── Per-section unified scroll controller (onUpdate — no competing tweens) ── */
+      sections.forEach((section, i) => {
+        const num = section.getAttribute('data-number');
+        const img = document.querySelector('.project-image[data-project="' + num + '"]');
+        // Initialize: all images hidden and blurred
+        img.style.opacity = '0';
+        img.style.filter = 'blur(' + BLUR_MAX + 'px)';
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 45%',
+          end: 'bottom top',
+          onUpdate: function(self) {
+            if (panelKilled) return;
+            const p = self.progress;
+            let opacity, blur;
+
+            /* ── Compute opacity ── */
+            if (p <= FADE_IN_START) {
+              opacity = 0;
+            } else if (p < FADE_IN_END) {
+              opacity = remap(p, FADE_IN_START, FADE_IN_END);
+            } else if (p < SHARP_END) {
+              opacity = 1;
+            } else if (p < FADE_OUT_END) {
+              opacity = 1 - remap(p, SHARP_END, FADE_OUT_END);
+            } else {
+              opacity = 0;
+            }
+
+            /* ── Compute blur ── */
+            if (p < UNBLUR_START) {
+              blur = BLUR_MAX;
+            } else if (p < UNBLUR_END) {
+              blur = BLUR_MAX * (1 - remap(p, UNBLUR_START, UNBLUR_END));
+            } else if (p < SHARP_END) {
+              blur = 0;
+            } else if (p < BLUR_OUT_END) {
+              blur = BLUR_MAX * remap(p, SHARP_END, BLUR_OUT_END);
+            } else {
+              blur = BLUR_MAX;
+            }
+
+            /* ── Apply directly — no GSAP tween, no conflict ── */
+            img.style.opacity = opacity;
+            img.style.filter = 'blur(' + blur.toFixed(1) + 'px)';
+
+            /* ── Track for panel ── */
+            imageOpacities[i] = opacity;
+            updatePanel();
+          },
+          onLeave: function() {
+            img.style.opacity = '0';
+            img.style.filter = 'blur(' + BLUR_MAX + 'px)';
+            imageOpacities[i] = 0;
+            updatePanel();
+          },
+          onLeaveBack: function() {
+            img.style.opacity = '0';
+            img.style.filter = 'blur(' + BLUR_MAX + 'px)';
+            imageOpacities[i] = 0;
+            updatePanel();
+          }
+        });
+      });
+
+      /* ── Hard cutoff: hide panel when next section enters viewport ── */
+      const nextSection = document.querySelector('.competencies');
+      if (nextSection) {
+        ScrollTrigger.create({
+          trigger: nextSection,
+          start: 'top 100%',
+          end: 'top 60%',
+          onEnter: function() {
+            panelKilled = true;
+            // Force all images hidden
+            sections.forEach(function(section, i) {
+              const num = section.getAttribute('data-number');
+              const img = document.querySelector('.project-image[data-project="' + num + '"]');
+              img.style.opacity = '0';
+              img.style.filter = 'blur(' + BLUR_MAX + 'px)';
+              imageOpacities[i] = 0;
+            });
+            updatePanel();
+          },
+          onLeaveBack: function() {
+            panelKilled = false;
+          }
+        });
+      }
+
+      // Refresh ScrollTrigger after images load for accurate positions
+      Promise.all(
+        Array.from(projectImages).map(img =>
+          img.complete ? Promise.resolve() : new Promise(r => { img.onload = r; img.onerror = r; })
+        )
+      ).then(() => ScrollTrigger.refresh());
+
+      // ── Apple-style scroll-driven reveal (ScrollTrigger per element) ──
+      // Animate project titles and descriptions
+      document.querySelectorAll('.project-title, .project-desc').forEach((el) => {
+        gsap.set(el, {
+          opacity: 0,
+          y: 50,
+          filter: 'blur(6px)'
+        });
+
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 92%',
+            end: 'top 60%',
+            scrub: 0.6
+          }
+        });
+      });
+
+      // Animate item rows
+      document.querySelectorAll('.item-row').forEach((row) => {
+        gsap.set(row, {
+          opacity: 0,
+          y: 60,
+          scale: 0.97,
+          filter: 'blur(8px)'
+        });
+
+        gsap.to(row, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'blur(0px)',
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: row,
+            start: 'top 92%',
+            end: 'top 55%',
+            scrub: 0.8
+          }
+        });
+      });
+
+      // ── How We Work cards: staggered 3-phase reveal ──
+      // Phase 1: Images fade in together
+      document.querySelectorAll('.process-card-visual').forEach((vis, i) => {
+        gsap.set(vis, { opacity: 0, y: 40, scale: 0.95 });
+        gsap.to(vis, {
+          opacity: 1, y: 0, scale: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: vis,
+            start: 'top 95%',
+            end: 'top 50%',
+            scrub: 1.0
+          }
+        });
+      });
+
+      // Phase 2: Title text over image (h3 inside visual)
+      document.querySelectorAll('.process-card h3').forEach((h3) => {
+        gsap.set(h3, { opacity: 0, y: 20 });
+        gsap.to(h3, {
+          opacity: 1, y: 0,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: h3.closest('.process-card-visual') || h3,
+            start: 'top 85%',
+            end: 'top 45%',
+            scrub: 0.8
+          }
+        });
+      });
+
+      // Phase 3: Number badges pop in
+      document.querySelectorAll('.process-number').forEach((num) => {
+        gsap.set(num, { opacity: 0, scale: 0.5 });
+        gsap.to(num, {
+          opacity: 1, scale: 1,
+          ease: 'back.out(1.7)',
+          scrollTrigger: {
+            trigger: num.closest('.process-card'),
+            start: 'top 90%',
+            end: 'top 55%',
+            scrub: 0.7
+          }
+        });
+      });
+
+      // Phase 4: Bullet lists fade up
+      document.querySelectorAll('.process-card ul').forEach((ul) => {
+        gsap.set(ul, { opacity: 0, y: 20 });
+        gsap.to(ul, {
+          opacity: 1, y: 0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: ul,
+            start: 'top 95%',
+            end: 'top 60%',
+            scrub: 0.8
+          }
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    // ── 3D scroll (v2) embedded under Current Projects ──
+    (function () {
+      const scrollContainer = document.getElementById('veoScrollContainer');
+      const stickyWrap = document.getElementById('veoStickyWrap');
+      const canvasWrap = document.getElementById('veoCanvasWrap');
+      const canvas = document.getElementById('veoFrameCanvas');
+      const loader = document.getElementById('veoLoader');
+      const loaderFill = document.getElementById('veoLoaderFill');
+      const loaderPct = document.getElementById('veoLoaderPct');
+      const progressBar = document.getElementById('veoProgressBar');
+
+      if (!scrollContainer || !stickyWrap || !canvasWrap || !canvas) return;
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const FRAME_COUNT = 139;
+      const FRAME_START = 2;
+      const IMG_W = 1280, IMG_H = 720;
+      const MAX_W = 1100;
+      const MAX_H = Math.round(MAX_W / (IMG_W / IMG_H));
+
+      const CAPTIONS = [
+        { el: document.getElementById('veoCap1'), start:  1, end:  52 },
+        { el: document.getElementById('veoCap2'), start: 55, end:  75 },
+        { el: document.getElementById('veoCap3'), start: 78, end: 102 },
+        { el: document.getElementById('veoCap4'), start:110, end: 139 },
+      ].filter(c => c.el);
+
+      function frameName(i) {
+        return '3d-images/' + String(i).padStart(3, '0') + '.png';
+      }
+
+      const ctx = canvas.getContext('2d', { alpha: false });
+      const images = new Array(FRAME_COUNT);
+      let lastDrawn = -1;
+      let started = false;
+
+      function fitCanvas() {
+        const wrapRect = canvasWrap.getBoundingClientRect();
+        const vw = Math.min(wrapRect.width, window.innerWidth - 80);
+        const vh = Math.min(window.innerHeight - 80, wrapRect.height || (window.innerHeight - 80));
+        const aspect = IMG_W / IMG_H;
+        let w = Math.min(vw, MAX_W);
+        let h = w / aspect;
+        if (h > Math.min(vh, MAX_H)) { h = Math.min(vh, MAX_H); w = h * aspect; }
+
+        canvas.width = Math.round(w);
+        canvas.height = Math.round(h);
+        canvas.style.width = '100%';
+        canvas.style.height = 'auto';
+      }
+
+      function drawFrame(rawIdx) {
+        const idx = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(rawIdx)));
+        if (idx !== lastDrawn) {
+          lastDrawn = idx;
+          ctx.drawImage(images[idx], 0, 0, canvas.width, canvas.height);
+        }
+
+        const frameNum = idx + 1;
+        const FADE = 6;
+
+        CAPTIONS.forEach(({ el, start, end }) => {
+          const active = frameNum >= start && frameNum <= end;
+          let opacity = 0;
+          if (active) {
+            const inFade  = Math.min(1, (frameNum - start) / FADE);
+            const outFade = Math.min(1, (end - frameNum) / FADE);
+            if (start === 1) {
+              opacity = outFade;
+            } else {
+              opacity = Math.min(inFade, outFade);
+            }
+          }
+          if (opacity > 0) el.classList.add('show');
+          else el.classList.remove('show');
+          el.style.opacity = opacity;
+        });
+      }
+
+      function preloadAll() {
+        return new Promise(resolve => {
+          let done = 0;
+          for (let i = 0; i < FRAME_COUNT; i++) {
+            const img = new Image();
+            img.onload = img.onerror = () => {
+              done++;
+              const pct = Math.round(done / FRAME_COUNT * 100);
+              if (loaderFill) loaderFill.style.width = pct + '%';
+              if (loaderPct) loaderPct.textContent = pct + '%';
+              if (done === FRAME_COUNT) resolve();
+            };
+            img.src = frameName(FRAME_START + i);
+            images[i] = img;
+          }
+        });
+      }
+
+      function initAnimation() {
+        fitCanvas();
+        drawFrame(0);
+        requestAnimationFrame(() => canvasWrap.classList.add('visible'));
+
+        const proxy = { frame: 0 };
+        gsap.to(proxy, {
+          frame: FRAME_COUNT - 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: scrollContainer,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.2,
+            pin: stickyWrap,
+            anticipatePin: 1,
+            onUpdate: self => {
+              if (progressBar) progressBar.style.width = (self.progress * 100).toFixed(2) + '%';
+            }
+          },
+          onUpdate: () => drawFrame(proxy.frame),
+        });
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        if (started) return;
+        const hit = entries.some(e => e.isIntersecting || e.intersectionRatio > 0);
+        if (!hit) return;
+        started = true;
+        io.disconnect();
+
+        preloadAll().then(() => {
+          if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.display = 'none'; }, 700);
+          }
+          initAnimation();
+          ScrollTrigger.refresh();
+        });
+      }, { root: null, threshold: 0.12, rootMargin: '400px 0px' });
+
+      io.observe(scrollContainer);
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          fitCanvas();
+          lastDrawn = -1;
+          drawFrame(0);
+          ScrollTrigger.refresh();
+        }, 100);
+      });
+    })();
+  </script>
+
+  <script>
+    // ── Blog Carousel (Apple-style) ──
+    (function () {
+      const blogs = [
+        {
+          title: 'AgriShield',
+          excerpt: 'Farm security cameras are increasingly used to monitor entrances and detect intruders — but also capture authorized workers, raising privacy concerns. Exploring real-time, privacy-preserving computer vision on edge hardware.',
+          image: 'https://aisenseusa.com/wp-content/uploads/2026/02/Screenshot-2026-02-05-130429.png',
+          link: 'https://aisenseusa.com/agrishield/',
+          date: '05 Feb 2026',
+          category: 'Privacy & Vision'
+        },
+        {
+          title: 'PoseGuard: Privacy-First Farm Security',
+          excerpt: 'PoseGuard monitors farm entry points while protecting the privacy of workers and visitors — no facial recognition, no stored identity data. Uses skeletal pose estimation to detect presence and intent.',
+          image: 'https://aisenseusa.com/wp-content/uploads/2026/02/Screenshot-2026-02-05-124811.png',
+          link: 'https://aisenseusa.com/poseguard-privacy-first-farm-security-at-ai-sense/',
+          date: '05 Feb 2026',
+          category: 'Research'
+        },
+        {
+          title: 'Why Many AgTech Startups Fail \u2026 Even With Working Products',
+          excerpt: 'Despite having functioning products, many AgTech startups fail to scale — revealing that technical excellence alone isn\'t enough to succeed in agriculture. Explores structural, cultural, and market-fit challenges.',
+          image: 'https://aisenseusa.com/wp-content/uploads/2026/02/agri-tech-failure-blog.jpg',
+          link: 'https://aisenseusa.com/why-many-agtech-startups-fail-even-with-working-products-or-tech/',
+          date: '04 Feb 2026',
+          category: 'Industry'
+        },
+        {
+          title: 'Edge AI for Precision Agriculture: From Sensor to Decision',
+          excerpt: 'How low-power edge devices are transforming farm operations by processing soil moisture, temperature, and conductivity data locally — enabling real-time decisions without cloud dependency or connectivity gaps.',
+          image: 'https://picsum.photos/seed/aisense-edge/800/520',
+          link: '#',
+          date: '20 Jan 2026',
+          category: 'Technology'
+        }
+      ];
+
+      const viewport = document.getElementById('blogCarouselViewport');
+      const dotsContainer = document.getElementById('blogDots');
+      let current = 0;
+      let autoPlayTimer = null;
+      let inactivityTimer = null;
+      const AUTO_INTERVAL = 5000;
+      const INACTIVITY_DELAY = 8000;
+
+      function truncate(text, wordLimit) {
+        const words = text.split(' ');
+        if (words.length <= wordLimit) return text;
+        return words.slice(0, wordLimit).join(' ') + '\u2026';
+      }
+
+      // Build cards
+      blogs.forEach((blog, i) => {
+        const card = document.createElement('div');
+        card.className = 'blog-card';
+        card.dataset.index = i;
+        card.innerHTML = `
+          <div class="blog-card-image">
+            <img src="${blog.image}" alt="${blog.title}" loading="lazy">
+          </div>
+          <div class="blog-card-body">
+            <span class="blog-card-meta">${blog.category} &middot; ${blog.date}</span>
+            <h3 class="blog-card-title">${blog.title}</h3>
+            <p class="blog-card-excerpt">${truncate(blog.excerpt, 20)} <a href="${blog.link}" target="_blank" rel="noopener" class="blog-card-link">Read more</a></p>
+          </div>`;
+        viewport.appendChild(card);
+      });
+
+      // Build dots
+      blogs.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'blog-dot';
+        dot.setAttribute('aria-label', `Go to blog ${i + 1}`);
+        dot.addEventListener('click', () => {
+          goTo(i);
+          if (!isManuallyPaused) {
+            pauseAutoPlay();
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(startAutoPlay, INACTIVITY_DELAY);
+          }
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      const cards = viewport.querySelectorAll('.blog-card');
+      const dots = dotsContainer.querySelectorAll('.blog-dot');
+
+      function goTo(index) {
+        current = ((index % blogs.length) + blogs.length) % blogs.length;
+        cards.forEach((card, i) => {
+          card.classList.remove('prev', 'next', 'hidden');
+          if (i === current) {
+            // active — no extra class needed
+          } else if (i === (current - 1 + blogs.length) % blogs.length) {
+            card.classList.add('prev');
+          } else if (i === (current + 1) % blogs.length) {
+            card.classList.add('next');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+      }
+
+      function next() { goTo(current + 1); }
+
+      function startAutoPlay() {
+        pauseAutoPlay();
+        autoPlayTimer = setInterval(next, AUTO_INTERVAL);
+      }
+
+      function pauseAutoPlay() {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+
+      // Play/Pause button
+      let isManuallyPaused = false;
+      const ppBtn = document.getElementById('blogPlayPause');
+      const ppPause = ppBtn.querySelector('.blog-pp-pause');
+      const ppPlay = ppBtn.querySelector('.blog-pp-play');
+
+      function updatePPIcon() {
+        ppPause.style.display = isManuallyPaused ? 'none' : '';
+        ppPlay.style.display = isManuallyPaused ? '' : 'none';
+        ppBtn.setAttribute('aria-label', isManuallyPaused ? 'Play autoplay' : 'Pause autoplay');
+      }
+
+      ppBtn.addEventListener('click', () => {
+        isManuallyPaused = !isManuallyPaused;
+        if (isManuallyPaused) {
+          pauseAutoPlay();
+          clearTimeout(inactivityTimer);
+        } else {
+          startAutoPlay();
+        }
+        updatePPIcon();
+      });
+
+      // Hover pause (only if not manually paused)
+      const section = document.getElementById('blogSection');
+      section.addEventListener('mouseenter', () => {
+        if (!isManuallyPaused) pauseAutoPlay();
+      });
+      section.addEventListener('mouseleave', () => {
+        if (!isManuallyPaused) {
+          clearTimeout(inactivityTimer);
+          startAutoPlay();
+        }
+      });
+
+      // Touch / swipe support
+      let touchStartX = 0;
+      let touchEndX = 0;
+      viewport.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      viewport.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) goTo(current + 1);
+          else goTo(current - 1);
+          if (!isManuallyPaused) {
+            pauseAutoPlay();
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(startAutoPlay, INACTIVITY_DELAY);
+          }
+        }
+      }, { passive: true });
+
+      // Init
+      goTo(0);
+      startAutoPlay();
+    })();
+  </script>
+
+  <script>
+    // ── Hero Carousel ──
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const heroDots = document.querySelectorAll('.hero-dot');
+    function goToSlide(n) {
+      slides[currentSlide].classList.remove('active');
+      heroDots[currentSlide].classList.remove('active');
+      currentSlide = ((n % slides.length) + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      heroDots[currentSlide].classList.add('active');
+    }
+    function changeSlide(dir) { goToSlide(currentSlide + dir); }
+    setInterval(() => changeSlide(1), 5000);
+
+    // ── Button ripple-glow mouse tracking ──
+    document.querySelectorAll('.btn-outline-white').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+        const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+        btn.style.setProperty('--glow-x', x + '%');
+        btn.style.setProperty('--glow-y', y + '%');
+      });
+    });
+
+    // ── FAQ Accordion ──
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+  </script>
+</body>
+</html>
